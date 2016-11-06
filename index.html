@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>documentChooser</title>
+
+  <style>
+    .document-chooser {
+      color: #226AA1;
+      width: 435px;
+      height: 480px;
+      padding: 10px;
+      background-color: rgb(221, 238, 247);
+      box-shadow: 3px 3px 3px #8db3cd;
+      border: 1px solid #8db3cd;
+      font-family: Verdana, "Geneva CE", lucida, sans-serif;
+      font-size: 11px;
+      z-index: 3001;
+    }
+
+    .document-chooser .header {
+      height: 20px;
+      font-weight: bold;
+    }
+
+    .document-chooser .search {
+      padding-top: 10px;
+      padding-bottom: 25px;
+    }
+
+    .document-chooser .search input {
+      float: right;
+      width: 80%;
+      border-left-color: #7BA3C5;
+      border-top-color: #7BA3C5;
+      border-right-color: #DDEEF7;
+      border-bottom-color: #DDEEF7;
+      border-width: 1px;
+      border-style: solid;
+      padding: 2px 2px 1px;
+      vertical-align: middle;
+      background: #fff;
+      color: #000;
+    }
+
+    .document-chooser .list {
+      background-color: white;
+      height: 369px;
+      margin-bottom: 10px;
+      overflow: scroll;
+      overflow-x: hidden;
+    }
+
+    .document-chooser .list .list-item {
+      height: 40px;
+      border-bottom: 1px solid #ccc;
+      cursor: pointer;
+    }
+
+    .document-chooser .list .list-item:hover {
+      background-color: #f2f6dc;
+    }
+
+    .document-chooser .list .list-item.selected {
+      color: #ffffff;
+      background-color: #93a438;
+      background-image: url('./ToggleSelected.png');
+      background-image: url('./ToggleSelected.png'), -webkit-linear-gradient(top, #6C7829, #93A438);
+      background-repeat: no-repeat;
+      background-position: right center;
+    }
+
+    .document-chooser .list .list-item .item-name {
+      display: inline-block;
+      float: left;
+      padding: 0 9px;
+      width: 320px;
+      height: 40px;
+      line-height: 40px;
+    }
+
+    .document-chooser .list .list-item .item-name span {
+      display: inline-block;
+      vertical-align: middle;
+      line-height: normal;
+      pointer-events: none;
+    }
+
+    .document-chooser .list .list-item .item-count {
+      width: 46px;
+      margin: 8px 23px 0 0;
+      display: inline-block;
+      float: right;
+      border: 1px solid #cccccc;
+      background-color: #fff;
+    }
+
+    .document-chooser .list .list-item .item-count input {
+      width: 22px;
+      vertical-align: middle;
+      height: 20px;
+      border: none;
+      padding-left: 3px;
+    }
+
+    .document-chooser .list .list-item .item-count .arrows {
+      display: inline-block;
+      width: 10px;
+      height: 20px;
+      vertical-align: middle;
+    }
+
+    .document-chooser .list .list-item .item-count .arrows .up {
+      width: 10px;
+      height: 8px;
+      overflow: hidden;
+      display: block;
+      padding: 1px 3px;
+      background: #e8e8e8 no-repeat url(./sprite.gif) 4px -97px;
+    }
+
+    .document-chooser .list .list-item .item-count .arrows .up:hover {
+      background-position: 4px -147px;
+      background-color: #cccccc;
+    }
+
+    .document-chooser .list .list-item .item-count .arrows .down {
+      width: 10px;
+      height: 9px;
+      overflow: hidden;
+      display: inline-block;
+      padding: 1px 3px;
+      background: #e8e8e8 no-repeat url(./sprite.gif) 4px -197px;
+    }
+
+    .document-chooser .list .list-item .item-count .arrows .down:hover {
+      background-position: 4px -247px;
+      background-color: #cccccc;
+    }
+
+    .document-chooser .navigation .btn {
+      height: 29px;
+      width: 96px;
+      background-color: #6EA1C5;
+      border: 0;
+      color: #ffffff;
+    }
+
+    .document-chooser .navigation .btn:hover {
+      background-color: #005292;
+    }
+
+    .document-chooser .navigation .choose {
+      float: left;
+    }
+
+    .document-chooser .navigation .close {
+      float: right;
+    }
+  </style>
+</head>
+<body>
+
+
+<div class="document-chooser" id="document-chooser">
+  <div class="header">
+    Výběr typu dokumentu
+  </div>
+  <div class="search">
+    Vyhledat
+    <input type="text" name="search">
+  </div>
+  <div class="list" id="list"></div>
+  <div class="navigation">
+    <button class="btn choose">Vybrat</button>
+    <button class="btn close">Zavřít</button>
+  </div>
+</div>
+
+<script>
+  (function () {
+    'use strict';
+
+    //TODO: get list from server
+    var documentList = [
+      {id: 1, name: 'Cenová výjimka'},
+      {id: 2, name: 'Čestné prohlášení'},
+      {id: 3, name: 'Daňové přiznání'},
+      {id: 4, name: 'Devinkulace poj. nemovitosti'},
+      {id: 5, name: 'Doplnění návrhu na výmaz vkladem do katastru nemovitostí'},
+      {id: 6, name: 'Dohoda o vypořádání maj. vzt.'},
+      {id: 7, name: 'Dohoda o vypořádaní SJM'},
+      {id: 8, name: 'Doklad o doplacení předešlých závazků'},
+      {id: 9, name: 'Důchodový výměr'},
+      {id: 10, name: 'Evidence podmínek čerpání'},
+      {id: 11, name: 'Formulář pro on-line ocenění'},
+      {id: 12, name: 'Geometrický plán'},
+      {id: 13, name: 'Fotografie nemovitosti'},
+      {id: 14, name: 'Klient má/nemá vlastní zdroje'},
+      {id: 15, name: 'Korespondence'},
+      {id: 16, name: 'Nájemní smlouva'},
+      {id: 17, name: 'Nabývací titul'},
+      {id: 18, name: 'Návrh na poskytnutí úvěru'},
+      {id: 19, name: 'Návrh na vklad'},
+      {id: 20, name: 'Návrh na výmaz omezení převodu nemovitosti	'},
+      {id: 21, name: 'Návrh na výmaz vkladem'},
+      {id: 22, name: 'Ostatní'},
+      {id: 23, name: 'Oznámení o vzniku zástavního práva z pojistného plnění'},
+      {id: 24, name: 'Podmínky čerpání k hypotečnímu úvěru - přehled pro banku'},
+      {id: 25, name: 'Oznámení o zavkladování zástavní smlouvy'},
+      {id: 26, name: 'Pojištění schopnosti splácet hypoteční úvěr a podmínky pojištění'},
+      {id: 27, name: 'Pojistná smlouva k nemovitosti'},
+      {id: 28, name: 'Pojistná smlouva životní'},
+      {id: 29, name: 'Potvrzení finančního úřadu o neexistenci daňových nedoplatků'},
+      {id: 30, name: 'Potvrzení o výši příjmů'},
+      {id: 31, name: 'Potvrzení o zániku omezení převodu nemovitosti'},
+      {id: 32, name: 'Potvrzení o zůstatku HÚ'},
+      {id: 33, name: 'Pracovní smlouva'},
+      {id: 34, name: 'Prohlášení vlastníka'},
+      {id: 35, name: 'Průvodní dopis'},
+      {id: 36, name: 'Předávací protokol'},
+      {id: 37, name: 'Rozsudek o rozvodu manželství s nabytím právní moci'},
+      {id: 38, name: 'Rozsudek o výchově a výživě nezletilých dětí'}
+    ];
+
+    var selectedDocs = [];
+
+    onload = createList;
+    function createList() {
+      var filter = document.querySelector('.document-chooser .search input').value;
+      var container = document.querySelector('.document-chooser #list');
+      var filteredList = documentList.filter(function (element) {
+        return filter ? _removeDiacritics(element.name.toLowerCase()).indexOf(_removeDiacritics(filter.toLowerCase())) > -1 : true;
+      });
+
+      var newList = filteredList.map(_createItem);
+
+      container.innerHTML = newList.join('\n');
+
+      function _createItem(item) {
+        return document.createElement("div").innerHTML = [
+          '<div class="list-item" id="document_' + item.id + '">',
+          '<div class="item-name"><span>' + item.name + '</span></div>',
+          '<div class="item-count">',
+          '<input type="text" value="1"  id="input_' + item.id + '">',
+          '<div class="arrows">',
+          '<span class="up" id="up_' + item.id + '"></span><span class="down" id="down_' + item.id + '"></span>',
+          '</div>',
+          '</div>',
+          '</div>'
+        ].join('\n');
+      }
+
+      function _removeDiacritics(s) {
+        var r = s.toLowerCase();
+        r = r.replace(new RegExp("[àáâãäå]", 'g'), "a");
+        r = r.replace(new RegExp("æ", 'g'), "ae");
+        r = r.replace(new RegExp("[çč]", 'g'), "c");
+        r = r.replace(new RegExp("[èéêë]", 'g'), "e");
+        r = r.replace(new RegExp("[ìíîï]", 'g'), "i");
+        r = r.replace(new RegExp("[ňñ]", 'g'), "n");
+        r = r.replace(new RegExp("[òóôõö]", 'g'), "o");
+        r = r.replace(new RegExp("œ", 'g'), "oe");
+        r = r.replace(new RegExp("ř", 'g'), "r");
+        r = r.replace(new RegExp("š", 'g'), "s");
+        r = r.replace(new RegExp("ß", 'g'), "ss");
+        r = r.replace(new RegExp("[ùúûüů]", 'g'), "u");
+        r = r.replace(new RegExp("[ýÿ]", 'g'), "y");
+        r = r.replace(new RegExp("ž", 'g'), "z");
+        return r;
+      }
+
+    }
+
+    document.querySelector('.document-chooser .navigation .close').addEventListener('click', close);
+    function close() {
+      document.querySelector('#document-chooser').style.display = 'none';
+    }
+
+    document.querySelector('.document-chooser .navigation .choose').addEventListener('click', choose);
+    function choose() {
+      //TODO: send selectedDocs to server throw REST
+      close();
+    }
+
+    document.querySelector('.document-chooser .search input').addEventListener('keydown', search);
+    function search(event) {
+      clearTimeout(updateList);
+      var updateList = setTimeout(function () {
+        createList();
+      }, 300);
+    }
+
+    document.querySelector('.document-chooser .list').addEventListener('click', clickDocument);
+    function clickDocument(event) {
+      var target = event.target.id ? event.target : event.target.parentElement;
+      if (target.id) {
+        var clickedElement = target.id.split('_');
+        var docId = clickedElement[1];
+        var elementName = clickedElement[0];
+        var docInput = document.querySelector('.document-chooser .list #input_' + docId);
+
+        var indexDoc = -1;
+        for (var i = 0, len = selectedDocs.length; i < len; i++) {
+          if (selectedDocs[i].id === docId) {
+            indexDoc = i;
+            break;
+          }
+        }
+
+        if (elementName === 'document') {
+          var docCount = docInput.value;
+
+          if (indexDoc === -1) {
+            selectedDocs.push({id: docId, count: docCount});
+            target.classList.add('selected')
+          }
+          else {
+            selectedDocs.splice(indexDoc, 1);
+            target.classList.remove('selected')
+          }
+        }
+        else if (elementName === 'up') {
+          docInput.value = +docInput.value + 1;
+
+          if (selectedDocs[indexDoc]) {
+            selectedDocs[indexDoc].count = docInput.value;
+          }
+        }
+        else if (elementName === 'down') {
+          if (+docInput.value > 0) {
+            docInput.value = +docInput.value - 1;
+
+            if (selectedDocs[indexDoc]) {
+              selectedDocs[indexDoc].count = docInput.value;
+            }
+          }
+        }
+      }
+    }
+
+    document.querySelector('.document-chooser .list').addEventListener('keydown', keydownDocument);
+    function keydownDocument(event) {
+      var target = event.target.id ? event.target : event.target.parentElement;
+      if (target.id) {
+        var UP = 38;
+        var DOWN = 40;
+
+        var docId = target.id.split('_')[1];
+        var docInput = event.target;
+        var keyCode = event.keyCode || event.which;
+
+        var indexDoc = -1;
+        for (var i = 0, len = selectedDocs.length; i < len; i++) {
+          if (selectedDocs[i].id === docId) {
+            indexDoc = i;
+            break;
+          }
+        }
+
+        if (keyCode === UP) {
+          docInput.value = +docInput.value + 1;
+
+          if (selectedDocs[indexDoc]) {
+            selectedDocs[indexDoc].count = docInput.value;
+          }
+        }
+        else if (keyCode === DOWN) {
+          if (+docInput.value > 0) {
+            docInput.value = +docInput.value - 1;
+
+            if (selectedDocs[indexDoc]) {
+              selectedDocs[indexDoc].count = docInput.value;
+            }
+          }
+        }
+      }
+    }
+
+  })();
+</script>
+
+
+</body>
+</html>
