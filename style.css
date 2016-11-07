@@ -1,0 +1,152 @@
+.document-chooser {
+    color: #226AA1;
+    width: 435px;
+    height: 480px;
+    padding: 10px;
+    background-color: rgb(221, 238, 247);
+    box-shadow: 3px 3px 3px #8db3cd;
+    border: 1px solid #8db3cd;
+    font-family: Verdana, "Geneva CE", lucida, sans-serif;
+    font-size: 11px;
+    z-index: 3001;
+}
+
+.document-chooser .header {
+    height: 20px;
+    font-weight: bold;
+}
+
+.document-chooser .search {
+    padding-top: 10px;
+    padding-bottom: 25px;
+}
+
+.document-chooser .search input {
+    float: right;
+    width: 80%;
+    border-left-color: #7BA3C5;
+    border-top-color: #7BA3C5;
+    border-right-color: #DDEEF7;
+    border-bottom-color: #DDEEF7;
+    border-width: 1px;
+    border-style: solid;
+    padding: 2px 2px 1px;
+    vertical-align: middle;
+    background: #fff;
+    color: #000;
+}
+
+.document-chooser .list {
+    background-color: white;
+    height: 369px;
+    margin-bottom: 10px;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+.document-chooser .list .list-item {
+    height: 40px;
+    border-bottom: 1px solid #ccc;
+    cursor: pointer;
+}
+
+.document-chooser .list .list-item:hover {
+    background-color: #f2f6dc;
+}
+
+.document-chooser .list .list-item.selected {
+    color: #ffffff;
+    background-color: #93a438;
+    background-image: url('./ToggleSelected.png');
+    background-image: url('./ToggleSelected.png'), -webkit-linear-gradient(top, #6C7829, #93A438);
+    background-repeat: no-repeat;
+    background-position: right center;
+}
+
+.document-chooser .list .list-item .item-name {
+    display: inline-block;
+    float: left;
+    padding: 0 9px;
+    width: 320px;
+    height: 40px;
+    line-height: 40px;
+}
+
+.document-chooser .list .list-item .item-name span {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
+    pointer-events: none;
+}
+
+.document-chooser .list .list-item .item-count {
+    width: 46px;
+    margin: 8px 23px 0 0;
+    display: inline-block;
+    float: right;
+    border: 1px solid #cccccc;
+    background-color: #fff;
+}
+
+.document-chooser .list .list-item .item-count input {
+    width: 22px;
+    vertical-align: middle;
+    height: 20px;
+    border: none;
+    padding-left: 3px;
+}
+
+.document-chooser .list .list-item .item-count .arrows {
+    display: inline-block;
+    width: 10px;
+    height: 20px;
+    vertical-align: middle;
+}
+
+.document-chooser .list .list-item .item-count .arrows .up {
+    width: 10px;
+    height: 8px;
+    overflow: hidden;
+    display: block;
+    padding: 1px 3px;
+    background: #e8e8e8 no-repeat url(./sprite.gif) 4px -97px;
+}
+
+.document-chooser .list .list-item .item-count .arrows .up:hover {
+    background-position: 4px -147px;
+    background-color: #cccccc;
+}
+
+.document-chooser .list .list-item .item-count .arrows .down {
+    width: 10px;
+    height: 9px;
+    overflow: hidden;
+    display: inline-block;
+    padding: 1px 3px;
+    background: #e8e8e8 no-repeat url(./sprite.gif) 4px -197px;
+}
+
+.document-chooser .list .list-item .item-count .arrows .down:hover {
+    background-position: 4px -247px;
+    background-color: #cccccc;
+}
+
+.document-chooser .navigation .btn {
+    height: 29px;
+    width: 96px;
+    background-color: #6EA1C5;
+    border: 0;
+    color: #ffffff;
+}
+
+.document-chooser .navigation .btn:hover {
+    background-color: #005292;
+}
+
+.document-chooser .navigation .choose {
+    float: left;
+}
+
+.document-chooser .navigation .close {
+    float: right;
+}
