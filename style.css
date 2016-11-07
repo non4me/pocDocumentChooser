@@ -57,8 +57,8 @@
 .document-chooser .list .list-item.selected {
     color: #ffffff;
     background-color: #93a438;
-    background-image: url('./ToggleSelected.png');
-    background-image: url('./ToggleSelected.png'), -webkit-linear-gradient(top, #6C7829, #93A438);
+    background-image: url('./img/ToggleSelected.png');
+    background-image: url('./img/ToggleSelected.png'), -webkit-linear-gradient(top, #6C7829, #93A438);
     background-repeat: no-repeat;
     background-position: right center;
 }
@@ -109,7 +109,7 @@
     overflow: hidden;
     display: block;
     padding: 1px 3px;
-    background: #e8e8e8 no-repeat url(./sprite.gif) 4px -97px;
+    background: #e8e8e8 no-repeat url(./img/sprite.gif) 4px -97px;
 }
 
 .document-chooser .list .list-item .item-count .arrows .up:hover {
@@ -123,7 +123,7 @@
     overflow: hidden;
     display: inline-block;
     padding: 1px 3px;
-    background: #e8e8e8 no-repeat url(./sprite.gif) 4px -197px;
+    background: #e8e8e8 no-repeat url(./img/sprite.gif) 4px -197px;
 }
 
 .document-chooser .list .list-item .item-count .arrows .down:hover {
