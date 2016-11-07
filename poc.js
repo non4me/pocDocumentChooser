@@ -1,48 +1,6 @@
 (function () {
     'use strict';
 
-    //TODO: get list from server
-    var documentList = [
-        {id: 1, name: 'Cenová výjimka'},
-        {id: 2, name: 'Čestné prohlášení'},
-        {id: 3, name: 'Daňové přiznání'},
-        {id: 4, name: 'Devinkulace poj. nemovitosti'},
-        {id: 5, name: 'Doplnění návrhu na výmaz vkladem do katastru nemovitostí'},
-        {id: 6, name: 'Dohoda o vypořádání maj. vzt.'},
-        {id: 7, name: 'Dohoda o vypořádaní SJM'},
-        {id: 8, name: 'Doklad o doplacení předešlých závazků'},
-        {id: 9, name: 'Důchodový výměr'},
-        {id: 10, name: 'Evidence podmínek čerpání'},
-        {id: 11, name: 'Formulář pro on-line ocenění'},
-        {id: 12, name: 'Geometrický plán'},
-        {id: 13, name: 'Fotografie nemovitosti'},
-        {id: 14, name: 'Klient má/nemá vlastní zdroje'},
-        {id: 15, name: 'Korespondence'},
-        {id: 16, name: 'Nájemní smlouva'},
-        {id: 17, name: 'Nabývací titul'},
-        {id: 18, name: 'Návrh na poskytnutí úvěru'},
-        {id: 19, name: 'Návrh na vklad'},
-        {id: 20, name: 'Návrh na výmaz omezení převodu nemovitosti	'},
-        {id: 21, name: 'Návrh na výmaz vkladem'},
-        {id: 22, name: 'Ostatní'},
-        {id: 23, name: 'Oznámení o vzniku zástavního práva z pojistného plnění'},
-        {id: 24, name: 'Podmínky čerpání k hypotečnímu úvěru - přehled pro banku'},
-        {id: 25, name: 'Oznámení o zavkladování zástavní smlouvy'},
-        {id: 26, name: 'Pojištění schopnosti splácet hypoteční úvěr a podmínky pojištění'},
-        {id: 27, name: 'Pojistná smlouva k nemovitosti'},
-        {id: 28, name: 'Pojistná smlouva životní'},
-        {id: 29, name: 'Potvrzení finančního úřadu o neexistenci daňových nedoplatků'},
-        {id: 30, name: 'Potvrzení o výši příjmů'},
-        {id: 31, name: 'Potvrzení o zániku omezení převodu nemovitosti'},
-        {id: 32, name: 'Potvrzení o zůstatku HÚ'},
-        {id: 33, name: 'Pracovní smlouva'},
-        {id: 34, name: 'Prohlášení vlastníka'},
-        {id: 35, name: 'Průvodní dopis'},
-        {id: 36, name: 'Předávací protokol'},
-        {id: 37, name: 'Rozsudek o rozvodu manželství s nabytím právní moci'},
-        {id: 38, name: 'Rozsudek o výchově a výživě nezletilých dětí'}
-    ];
-
     var selectedDocs = [];
 
     onload = createList;
